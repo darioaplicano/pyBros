@@ -30,10 +30,10 @@ class mario(pygame.sprite.Sprite):
 
         variables:
         '''
-        if self.imageNumber >= 0 and self.imageNumber <= 2:
+        if self.imageNumber >= 0 and self.imageNumber <= 3:
             self.imageNumber += 1
-        if self.imageNumber == 3:
-            self.imageNumber = 1
+        if self.imageNumber == 4:
+            self.imageNumber = 0
 
         if (key == pygame.K_LEFT):
             self.rect.move_ip(-20, 0)

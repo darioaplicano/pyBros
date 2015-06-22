@@ -7,7 +7,7 @@ import pygame
 import loads
 import figures
 import splashScreen
-import sys
+import pygame.event
 
 '''
     Esta es la clase principal en todo el juego, contiene todos los métodos necesarios para una estadía agradable en
@@ -43,11 +43,6 @@ class main:
         #Esta variable representa la inexistencia del evento type quit de pygame, tal que mientras sea False el
         #juego funcionará bien, sin embargo al llegar a ser True, este se cesarra automaticamente.
         self.out = False
-
-        #Variables necesarias para el buen funcionamiento del menú pausa
-        self.outPause = False #En este caso se sale del menu pausa
-        self.selected = 0
-        self.total = 0
 
         #Realiza la activación y desactivación de los movimientos de mario
         self.motionActivated = False
@@ -111,38 +106,11 @@ class main:
                         self.combinationKey == pygame.K_UP
                         print self.combinationKey
                     self.combinationKeyActivated = True
-                if event.key == pygame.K_SPACE:
-                    self.pause()
-                    self.outPause = False
             #Si esta decision llega a retornar verdadero, se guardará el tipo de evento y se desactivará motionActivated
             if event.type == pygame.KEYUP:
                 self.key = pygame.KEYUP
                 self.motionActivated = False
 
-    def listenEventPause(self):
-        for event in pygame.event.get():
-            #Si esta decision llega a retornar verdadero, se cerrará automáticamente la pantalla del juego
-            if event.type == pygame.QUIT:
-                sys.exit(0)
-            #Si esta decision llega a retornar verdadero, se guardara la tecla persionada y se activara motionActivated
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    if self.selected > 0:
-                        self.selected -= 1
-                    else:
-                        self.selected = 3
-                if event.key == pygame.K_DOWN:
-                    if self.selected < self.total-1:
-                        self.selected += 1
-                    else:
-                        self.selected = 0
-                if event.key == pygame.K_RETURN:
-                    if self.selected == 2:
-                        self.outPause = True
-                    if self.selected == 3:
-                        sys.exit(0)
-                if event.key == pygame.K_BACKSPACE:
-                    self.outPause = True
     '''
         Este método de clase, maneja el comportamiento de mario
     '''
@@ -167,36 +135,6 @@ class main:
         imageBackGround = pygame.transform.scale(self.loads.main_Screen,(self.resolucion))
         self.workSpace.blit(imageBackGround,(0,0))
         self.workSpace.blit(self.figureMario.image, self.figureMario.rect)
-
-    '''
-        Este método de clase, tiene como función pausar el juego  para esperar otros eventos
-    '''
-    def pause(self):
-        options = [("continue",''),
-                    ("active agent",''),
-                    ("save and continue",''),
-                    ("save and quit",'')]
-        self.selected = 0
-        self.total = len(options)
-        width = 400
-        height = self.total * 50
-        background_pause = pygame.Surface((width,height))
-        background_pause.fill((0,0,0))
-        while not self.outPause:
-            #Cuenta la cantidad de opciones
-            counter = 0
-            #Llama a los eventos del teclado destinados para pausa
-            self.listenEventPause()
-            #Se pinta la superficie sobre la imagen
-            self.workSpace.blit(background_pause,(self.width/2 - width/2, self.height/2 - height/2))
-            for option in options:
-                if self.selected == counter:
-                    fungus = pygame.transform.scale(self.loads.fungus, (25,25))
-                    self.workSpace.blit(fungus, (self.width/2 - width/2, self.height/2 - height/2 + 10 + counter * 50))
-                text = self.loads.font_Mario.render(option[0], 0, (255,255,255,255))
-                self.workSpace.blit(text, (self.width/2 - width/2 + 30, self.height/2 - height/2 + 10 + counter * 50))
-                counter += 1
-            pygame.display.flip()
 
 #Se crea una instancia al juego para comenzar el mismo
 iniciar = main()
