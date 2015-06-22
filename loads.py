@@ -19,3 +19,4 @@ class loads:
         self.pyBros_Logo = pygame.image.load('Images/pyBros_Logo.png')
 
         #En esta seccion se cargan los sonidos a utilizar en el juego
+        self.jumping_SoundMario = pygame.mixer.Sound('Music/effectSounds/smb3_jump.wav')
