@@ -17,7 +17,6 @@ class splashScreen(pygame.sprite.Sprite):
     def actived(self):
         self.workSpace.blit(self.pyBros_Logo, self.position)
         pygame.display.flip()
-        print "SE pinto"
         self.animationBar()
 
     def animationBar(self):

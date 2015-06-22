@@ -26,7 +26,7 @@ class main:
 
         #resolución de la pantalla.
         self.width = 1280
-        self.height= 500
+        self.height= 720
 
         #Creamos el area de trabajo y visualizacion de archivos
         self.resolucion = (self.width, self.height)
@@ -133,7 +133,7 @@ class main:
     def screenPaint(self):
         # Pintado de pantalla
         self.workSpace.fill((255,255,255))
-        imageBackGround = pygame.transform.scale(self.loads.backGround_Image,(self.resolucion))
+        imageBackGround = pygame.transform.scale(self.loads.main_Screen,(self.resolucion))
         self.workSpace.blit(imageBackGround,(0,0))
         self.workSpace.blit(self.figureMario.image, self.figureMario.rect)
 

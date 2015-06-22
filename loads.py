@@ -17,6 +17,7 @@ class loads:
         walkLeft_Mario = pygame.image.load('Images/jumping_Mario.png')
         self.imagesMario = [resting_Mario, walkRight_Mario, walkLeft_Mario, jumping_Mario]
         self.pyBros_Logo = pygame.image.load('Images/pyBros_Logo.png')
+        self.main_Screen = pygame.image.load('Images/main_Screen.png')
 
         #En esta seccion se cargan los sonidos a utilizar en el juego
         self.jumping_SoundMario = pygame.mixer.Sound('Music/effectSounds/smb3_jump.wav')
