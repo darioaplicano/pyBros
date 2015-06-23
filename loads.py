@@ -22,9 +22,15 @@ class loads:
         self.pyBros_Logo = pygame.image.load('Images/pyBros_Logo.png')
         self.main_Screen = pygame.image.load('Images/main_Screen.png')
         self.fungus =  pygame.image.load('Images/fungus.png')
+        main_MarioMove1 = pygame.image.load('Images/main_mario_move1.png')
+        main_MarioMove2 = pygame.image.load('Images/main_mario_move2.png')
+        self.main_Mario = [main_MarioMove1, main_MarioMove2]
 
         #En esta seccion se cargan los sonidos a utilizar en el juego
         self.jumping_SoundMario = pygame.mixer.Sound('Music/effectSounds/smb3_jump.wav')
+        self.pause = pygame.mixer.Sound('Music/effectSounds/smb3_pause.wav')
+        self.travel_Principal = pygame.mixer.Sound('Music/effectSounds/smb3_map_travel.wav')
+
 
         #En esta sección se cargan las fuentes necesarias
         self.font_Mario = pygame.font.Font("Fonts/Super-Mario-Bros--3.ttf", 25)

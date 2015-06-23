@@ -51,3 +51,34 @@ class mario(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.images[self.imageNumber],self.resolution)
         if self.invert:
             self.image = pygame.transform.flip(self.image, self.invert, False)
+
+class main_mario(pygame.sprite.Sprite):
+    def __init__(self, imagesMario, posx, posy):
+        pygame.sprite.Sprite.__init__(self)
+        self.resolution = (50, 60)
+        self.images = imagesMario
+        self.imageNumber = 0
+        self.image = pygame.transform.scale(self.images[self.imageNumber],self.resolution)
+        self.rect = self.images[self.imageNumber].get_rect()
+        self.rect.left = posx
+        self.rect.top = posy
+
+    '''
+        Este metodo tiene como fin modelar los comportamientos de mario, en su desplazamiento
+
+        variables:
+            key: Contiene el valor de la tecla o el tipo de evento generado en el juego principal que interviene en los
+        movimientos de mario.
+    '''
+
+    def update(self):
+            '''
+            Mediante estas decisiones se hace el cambio de imagenes respectivo para el desplazamiento de mario
+
+            variables:
+            '''
+            if self.imageNumber >= 0 and self.imageNumber <= 1:
+                self.imageNumber += 1
+            if self.imageNumber == 2:
+                self.imageNumber = 0
+            self.image = pygame.transform.scale(self.images[self.imageNumber],self.resolution)

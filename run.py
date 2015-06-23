@@ -36,6 +36,7 @@ class main:
         #Instanciamos variables a los archivos externos necesarios.
         self.loads = loads.loads()
         self.figureMario = figures.mario(self.loads.imagesMario, 150, 300)
+        self.main_mario = figures.main_mario(self.loads.main_Mario, 333, 200)
 
         #Iniciamos la pantalla de bienvenida
         splashScreen.splashScreen(self.workSpace, self.loads.pyBros_Logo, self.width/2, self.height/2)
@@ -64,7 +65,8 @@ class main:
     '''
     def run(self):
         #Musica de fondo de entrada del juego
-        pygame.mixer.music.load('Music/backgroundSounds/smb3_whistle.wav')
+        pygame.mixer.music.load('Music/backgroundSounds/background_musicPrincipal.mp3')
+        pygame.mixer.music.play(-1)
         while not self.out:
             # Esta funcion tiene el fin de manejar el comportamiento de los eventos
             self.listenEvent()
@@ -75,7 +77,7 @@ class main:
 
             # Limita a 20 fotogramas por segundo el pintado de la pantalla
             pygame.display.flip()
-            self.reloj.tick(20)
+            self.reloj.tick(10)
 
     '''
         Este método escucha todos los eventos realizados ya sea por el mouse o el teclado, además que inicializa
@@ -126,6 +128,7 @@ class main:
                 sys.exit(0)
             #Si esta decision llega a retornar verdadero, se guardara la tecla persionada y se activara motionActivated
             if event.type == pygame.KEYDOWN:
+                self.loads.travel_Principal.play()
                 if event.key == pygame.K_UP:
                     if self.selected > 0:
                         self.selected -= 1
@@ -167,11 +170,14 @@ class main:
         imageBackGround = pygame.transform.scale(self.loads.main_Screen,(self.resolucion))
         self.workSpace.blit(imageBackGround,(0,0))
         self.workSpace.blit(self.figureMario.image, self.figureMario.rect)
+        self.workSpace.blit(self.main_mario.image, self.main_mario.rect)
+        self.main_mario.update()
 
     '''
         Este método de clase, tiene como función pausar el juego  para esperar otros eventos
     '''
     def pause(self):
+        self.loads.pause.play()
         options = [("continue",''),
                     ("active agent",''),
                     ("save and continue",''),
@@ -197,6 +203,7 @@ class main:
                 self.workSpace.blit(text, (self.width/2 - width/2 + 30, self.height/2 - height/2 + 10 + counter * 50))
                 counter += 1
             pygame.display.flip()
+        self.loads.pause.play()
 
 #Se crea una instancia al juego para comenzar el mismo
 iniciar = main()
