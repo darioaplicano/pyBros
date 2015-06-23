@@ -7,6 +7,7 @@ import pygame
 import loads
 import figures
 import splashScreen
+import levels
 import sys
 
 '''
@@ -29,17 +30,19 @@ class main:
         self.height= 720
 
         #Creamos el area de trabajo y visualizacion de archivos
-        self.resolucion = (self.width, self.height)
-        self.workSpace = pygame.display.set_mode(self.resolucion)
+        self.resolution = (self.width, self.height)
+        self.screen = pygame.display.set_mode(self.resolution)
         pygame.display.set_caption('pyBros '+str(pygame.ver))
 
         #Instanciamos variables a los archivos externos necesarios.
         self.loads = loads.loads()
-        self.figureMario = figures.mario(self.loads.imagesMario, 150, 300)
-        self.main_mario = figures.main_mario(self.loads.main_Mario, 333, 200)
+        self.figureMario = figures.mario(self.loads.imagesMario, 150, 573)
+        self.main_mario = figures.main_mario(self.loads.main_Mario, 333, 250)
+        self.hammer = figures.enemy(self.loads.imagesHammer, self.loads.smallHammer, 1050, 433)
+        self.brick = figures.brick(self.loads.brick, 800, 500)
 
         #Iniciamos la pantalla de bienvenida
-        splashScreen.splashScreen(self.workSpace, self.loads.pyBros_Logo, self.width/2, self.height/2)
+        splashScreen.splashScreen(self.screen, self.loads.pyBros_Logo, self.width/2, self.height/2)
 
         #Esta variable representa la inexistencia del evento type quit de pygame, tal que mientras sea False el
         #juego funcionará bien, sin embargo al llegar a ser True, este se cesarra automaticamente.
@@ -116,6 +119,9 @@ class main:
                 if event.key == pygame.K_SPACE:
                     self.pause()
                     self.outPause = False
+                if event.key == pygame.K_RETURN:
+                    levels.level1(self.screen, self.resolution, self.loads.background_stage1, self.loads.floor_stage1,
+                                  self.brick, self.figureMario, self.hammer)
             #Si esta decision llega a retornar verdadero, se guardará el tipo de evento y se desactivará motionActivated
             if event.type == pygame.KEYUP:
                 self.key = pygame.KEYUP
@@ -166,12 +172,22 @@ class main:
     '''
     def screenPaint(self):
         # Pintado de pantalla
-        self.workSpace.fill((255,255,255))
-        imageBackGround = pygame.transform.scale(self.loads.main_Screen,(self.resolucion))
-        self.workSpace.blit(imageBackGround,(0,0))
-        self.workSpace.blit(self.figureMario.image, self.figureMario.rect)
-        self.workSpace.blit(self.main_mario.image, self.main_mario.rect)
+        self.screen.fill((255,255,255))
+        imageBackGround = pygame.transform.scale(self.loads.main_Screen,(self.resolution))
+        self.screen.blit(imageBackGround,(0,0))
+        self.screen.blit(self.figureMario.image, self.figureMario.rect)
+        self.screen.blit(self.main_mario.image, self.main_mario.rect)
+        self.screen.blit(self.hammer.image, self.hammer.position)
+        self.screen.blit(self.brick.image, self.brick.rect)
+        self.update()
+
+    '''
+        Este método de clase, actualiza los personajes para sus movimientos
+    '''
+    def update(self):
         self.main_mario.update()
+        self.hammer.update()
+        self.brick.update()
 
     '''
         Este método de clase, tiene como función pausar el juego  para esperar otros eventos
@@ -194,13 +210,13 @@ class main:
             #Llama a los eventos del teclado destinados para pausa
             self.listenEventPause()
             #Se pinta la superficie sobre la imagen
-            self.workSpace.blit(background_pause,(self.width/2 - width/2, self.height/2 - height/2))
+            self.screen.blit(background_pause,(self.width/2 - width/2, self.height/2 - height/2))
             for option in options:
                 if self.selected == counter:
                     fungus = pygame.transform.scale(self.loads.fungus, (25,25))
-                    self.workSpace.blit(fungus, (self.width/2 - width/2, self.height/2 - height/2 + 10 + counter * 50))
+                    self.screen.blit(fungus, (self.width/2 - width/2, self.height/2 - height/2 + 10 + counter * 50))
                 text = self.loads.font_Mario.render(option[0], 0, (255,255,255,255))
-                self.workSpace.blit(text, (self.width/2 - width/2 + 30, self.height/2 - height/2 + 10 + counter * 50))
+                self.screen.blit(text, (self.width/2 - width/2 + 30, self.height/2 - height/2 + 10 + counter * 50))
                 counter += 1
             pygame.display.flip()
         self.loads.pause.play()
