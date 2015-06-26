@@ -70,7 +70,6 @@ class main:
     def run(self):
         #Musica de fondo de entrada del juego
         pygame.mixer.music.load('Music/backgroundSounds/background_musicPrincipal.mp3')
-        pygame.mixer.music.play(-1)
         while not self.out:
             # Esta funcion tiene el fin de manejar el comportamiento de los eventos
             self.listenEvent()

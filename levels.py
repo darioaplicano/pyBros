@@ -28,7 +28,6 @@ class level1(pygame.sprite.Sprite):
 
     def run(self):
         pygame.mixer.music.load('Music/backgroundSounds/background_musicPrincipal.mp3')
-        pygame.mixer.music.play(-1)
         while not self.out:
             # Esta funcion tiene el fin de manejar el comportamiento de los eventos
             self.listenEvent()
@@ -39,7 +38,7 @@ class level1(pygame.sprite.Sprite):
 
             # Limita a 20 fotogramas por segundo el pintado de la pantalla
             pygame.display.flip()
-            self.reloj.tick(10)
+            self.reloj.tick(15)
 
     def listenEvent(self):
         #Se esperan todos los eventos producidos por el teclado y ratón del computador
@@ -73,8 +72,6 @@ class level1(pygame.sprite.Sprite):
             if self.key == pygame.KEYUP:
                 self.key = pygame.K_UP
             self.figureMario.update(self.key, self.efectSound)
-            if self.combinationKeyActivated:
-                self.figureMario.update(self.combinationKey, '')
         else:
             if self.key == pygame.KEYUP:
                 self.figureMario.update(self.key, '')

@@ -17,6 +17,9 @@ class mario(pygame.sprite.Sprite):
         self.rect.left = posx
         self.rect.top = posy
         self.invert = False
+        self.jump = 0
+        self.top = 100
+        self.jumpStart = False
 
     '''
         Este metodo tiene como fin modelar los comportamientos de mario, en su desplazamiento
@@ -37,15 +40,20 @@ class mario(pygame.sprite.Sprite):
         if self.imageNumber == 4:
             self.imageNumber = 0
 
+        if not self.jumpStart:
+            if self.jump < self.top:
+                self.jump += 20
+                self.rect.move_ip(0, -20)
+            else:
+                self.rect.move_ip(0, 20)
+                self.jump -= 20
+
         if (key == pygame.K_LEFT):
             self.rect.move_ip(-20, 0)
             self.invert = True
         if (key == pygame.K_RIGHT):
             self.rect.move_ip(20, 0)
             self.invert = False
-        if (key == pygame.K_UP):
-            sound.play()
-            self.rect.move_ip(0, -5)
 
         if (key == pygame.KEYUP):
             self.imageNumber = 0
