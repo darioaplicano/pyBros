@@ -6,9 +6,10 @@ import sys
 
 class level1(pygame.sprite.Sprite):
 
-    def __init__(self, screen, resolution, background, floor, brick, mario, enemy):
+    def __init__(self, screen, resolution, background, efectSound, floor, brick, mario, enemy):
         self.screen = screen
         self.background = background
+        self.efectSound = efectSound
         self.resolution = resolution
         self.floor = floor
         self.brick = brick
@@ -48,28 +49,16 @@ class level1(pygame.sprite.Sprite):
                 sys.exit(0)
             #Si esta decision llega a retornar verdadero, se guardara la tecla persionada y se activara motionActivated
             if event.type == pygame.KEYDOWN:
-                if not self.motionActivated:
-                    if event.key == pygame.K_RIGHT:
-                        self.key = pygame.K_RIGHT
-                        print self.key
-                    if event.key == pygame.K_LEFT:
-                        self.key = pygame.K_LEFT
-                        print self.key
-                    if event.key == pygame.K_UP:
-                        self.key == pygame.K_UP
-                        print self.key
-                    self.motionActivated = True
-                else:
-                    if event.key == pygame.K_RIGHT:
-                        self.combinationKey = pygame.K_RIGHT
-                        print self.combinationKey
-                    if event.key == pygame.K_LEFT:
-                        self.combinationKey = pygame.K_LEFT
-                        print self.combinationKey
-                    if event.key == pygame.K_UP:
-                        self.combinationKey == pygame.K_UP
-                        print self.combinationKey
-                    self.combinationKeyActivated = True
+                if event.key == pygame.K_RIGHT:
+                    self.key = pygame.K_RIGHT
+                    print self.key
+                if event.key == pygame.K_LEFT:
+                    self.key = pygame.K_LEFT
+                    print self.key
+                if event.key == pygame.K_UP:
+                    self.key == pygame.K_UP
+                    print self.key
+                self.motionActivated = True
             #Si esta decision llega a retornar verdadero, se guardará el tipo de evento y se desactivará motionActivated
             if event.type == pygame.KEYUP:
                 self.key = pygame.KEYUP
@@ -83,7 +72,7 @@ class level1(pygame.sprite.Sprite):
         if self.motionActivated:
             if self.key == pygame.KEYUP:
                 self.key = pygame.K_UP
-            self.figureMario.update(self.key, '')
+            self.figureMario.update(self.key, self.efectSound)
             if self.combinationKeyActivated:
                 self.figureMario.update(self.combinationKey, '')
         else:

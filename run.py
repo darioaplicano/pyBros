@@ -37,9 +37,13 @@ class main:
         #Instanciamos variables a los archivos externos necesarios.
         self.loads = loads.loads()
         self.figureMario = figures.mario(self.loads.imagesMario, 150, 573)
-        self.main_mario = figures.main_mario(self.loads.main_Mario, 333, 250)
+        self.main_mario = figures.main_mario(self.loads.main_Mario, 333, 200)
         self.hammer = figures.enemy(self.loads.imagesHammer, self.loads.smallHammer, 1050, 433)
         self.brick = figures.brick(self.loads.brick, 800, 500)
+        self.bush = figures.bush(self.loads.imagesBush, 387, 208)
+        self.bone = figures.bone(self.loads.imagesBones, 918,486)
+        self.point = figures.point(self.loads.imagesPoint, 556, 334)
+        self.flower = figures.flower(self.loads.imagesFlower, 380, 360)
 
         #Iniciamos la pantalla de bienvenida
         splashScreen.splashScreen(self.screen, self.loads.pyBros_Logo, self.width/2, self.height/2)
@@ -54,10 +58,7 @@ class main:
         self.total = 0
 
         #Realiza la activación y desactivación de los movimientos de mario
-        self.motionActivated = False
-        self.combinationKeyActivated = False
         self.key = pygame.KEYUP
-        self.combinationKey = pygame.KEYUP
          
         # Se usa para gestionar cuan rápido se actualiza la pantalla
         self.reloj = pygame.time.Clock()
@@ -75,12 +76,11 @@ class main:
             self.listenEvent()
             
             # AQUI TODA LA LÓGICA DEL JUEGO
-            self.mariosMoves()
             self.screenPaint()
 
             # Limita a 20 fotogramas por segundo el pintado de la pantalla
             pygame.display.flip()
-            self.reloj.tick(10)
+            self.reloj.tick(5)
 
     '''
         Este método escucha todos los eventos realizados ya sea por el mouse o el teclado, además que inicializa
@@ -94,38 +94,13 @@ class main:
                 self.out = True
             #Si esta decision llega a retornar verdadero, se guardara la tecla persionada y se activara motionActivated
             if event.type == pygame.KEYDOWN:
-                if not self.motionActivated:
-                    if event.key == pygame.K_RIGHT:
-                        self.key = pygame.K_RIGHT
-                        print self.key
-                    if event.key == pygame.K_LEFT:
-                        self.key = pygame.K_LEFT
-                        print self.key
-                    if event.key == pygame.K_UP:
-                        self.key == pygame.K_UP
-                        print self.key
-                    self.motionActivated = True
-                else:
-                    if event.key == pygame.K_RIGHT:
-                        self.combinationKey = pygame.K_RIGHT
-                        print self.combinationKey
-                    if event.key == pygame.K_LEFT:
-                        self.combinationKey = pygame.K_LEFT
-                        print self.combinationKey
-                    if event.key == pygame.K_UP:
-                        self.combinationKey == pygame.K_UP
-                        print self.combinationKey
-                    self.combinationKeyActivated = True
                 if event.key == pygame.K_SPACE:
                     self.pause()
                     self.outPause = False
                 if event.key == pygame.K_RETURN:
-                    levels.level1(self.screen, self.resolution, self.loads.background_stage1, self.loads.floor_stage1,
-                                  self.brick, self.figureMario, self.hammer)
-            #Si esta decision llega a retornar verdadero, se guardará el tipo de evento y se desactivará motionActivated
-            if event.type == pygame.KEYUP:
-                self.key = pygame.KEYUP
-                self.motionActivated = False
+                    levels.level1(self.screen, self.resolution, self.loads.background_stage1,
+                                  self.loads.jumping_SoundMario, self.loads.floor_stage1, self.brick, self.figureMario,
+                                  self.hammer)
 
     def listenEventPause(self):
         for event in pygame.event.get():
@@ -153,21 +128,6 @@ class main:
                 if event.key == pygame.K_BACKSPACE:
                     self.outPause = True
     '''
-        Este método de clase, maneja el comportamiento de mario
-    '''
-    def mariosMoves(self):
-        #Si esta decisión llega a retornar verdadero, se realizarán los movimientos en mario, sino mario se detendrá
-        if self.motionActivated:
-            if self.key == pygame.KEYUP:
-                self.key = pygame.K_UP
-            self.figureMario.update(self.key, self.loads.jumping_SoundMario)
-            if self.combinationKeyActivated:
-                self.figureMario.update(self.combinationKey, '')
-        else:
-            if self.key == pygame.KEYUP:
-                self.figureMario.update(self.key, '')
-
-    '''
         Este método de clase, pinta en el área de trabajo todo lo necesario para la parte vistosa del juego
     '''
     def screenPaint(self):
@@ -175,10 +135,28 @@ class main:
         self.screen.fill((255,255,255))
         imageBackGround = pygame.transform.scale(self.loads.main_Screen,(self.resolution))
         self.screen.blit(imageBackGround,(0,0))
-        self.screen.blit(self.figureMario.image, self.figureMario.rect)
+        #Pintamos 7 captus bailarines en la pantalla principal
+        self.screen.blit(self.bush.image, self.bush.rect)
+        self.screen.blit(self.bush.image, (330, 156))
+        self.screen.blit(self.bush.image, (490, 156))
+        self.screen.blit(self.bush.image, (647, 151))
+        self.screen.blit(self.bush.image, (752, 151))
+        self.screen.blit(self.bush.image, (647, 103))
+        self.screen.blit(self.bush.image, (752, 103))
+        #Pintamos 2 calaberas con ojos brillantes
+        self.screen.blit(self.bone.image, self.bone.rect)
+        self.screen.blit(self.bone.image, (974,486))
+        #Pintamos 2 puntos brillantes
+        self.screen.blit(self.point.image, self.point.rect)
+        self.screen.blit(self.point.image, (836, 226))
+        #Pintamos 5 flores
+        self.screen.blit(self.flower.image, self.flower.rect)
+        self.screen.blit(self.flower.image, (440, 360))
+        self.screen.blit(self.flower.image, (320, 360))
+        self.screen.blit(self.flower.image, (440, 303))
+        self.screen.blit(self.flower.image, (440, 417))
+        #Pintamos a mario moviendose para que se desplace por los caminos en la pantalla principal
         self.screen.blit(self.main_mario.image, self.main_mario.rect)
-        self.screen.blit(self.hammer.image, self.hammer.position)
-        self.screen.blit(self.brick.image, self.brick.rect)
         self.update()
 
     '''
@@ -186,8 +164,10 @@ class main:
     '''
     def update(self):
         self.main_mario.update()
-        self.hammer.update()
-        self.brick.update()
+        self.point.update()
+        self.bone.update()
+        self.flower.update()
+        self.bush.update()
 
     '''
         Este método de clase, tiene como función pausar el juego  para esperar otros eventos

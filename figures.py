@@ -117,6 +117,129 @@ class brick(pygame.sprite.Sprite):
             self.imageNumber = 0
         self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
 
+class bush(pygame.sprite.Sprite):
+    def __init__(self, imagesBush, posx, posy):
+        pygame.sprite.Sprite.__init__(self)
+        self.resolution = (55, 45)
+        self.images = imagesBush
+        self.imageNumber = 0
+        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+        self.rect = self.images[self.imageNumber].get_rect()
+        self.rect.left = posx
+        self.rect.top = posy
+
+    '''
+        Este metodo tiene como fin modelar los comportamientos del bloque donde se para hammerbros, en su desplazamiento
+
+        variables:
+            key: Contiene el valor de la tecla o el tipo de evento generado en el juego principal que interviene en los
+        movimientos del bloque donde se para hammerbros.
+    '''
+
+    def update(self):
+        '''
+            Mediante estas decisiones se hace el cambio de imagenes respectivo para el desplazamiento de mario
+
+            variables:
+            '''
+        if self.imageNumber >= 0 and self.imageNumber <= 2:
+            self.imageNumber += 1
+        if self.imageNumber == 3:
+            self.imageNumber = 0
+        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+
+class bone(pygame.sprite.Sprite):
+    def __init__(self, imagesBone, posx, posy):
+        pygame.sprite.Sprite.__init__(self)
+        self.resolution = (53, 50)
+        self.images = imagesBone
+        self.imageNumber = 0
+        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+        self.rect = self.images[self.imageNumber].get_rect()
+        self.rect.left = posx
+        self.rect.top = posy
+
+    '''
+        Este metodo tiene como fin modelar los comportamientos del bloque donde se para hammerbros, en su desplazamiento
+
+        variables:
+            key: Contiene el valor de la tecla o el tipo de evento generado en el juego principal que interviene en los
+        movimientos del bloque donde se para hammerbros.
+    '''
+
+    def update(self):
+        '''
+            Mediante estas decisiones se hace el cambio de imagenes respectivo para el desplazamiento de mario
+
+            variables:
+            '''
+        if self.imageNumber >= 0 and self.imageNumber <= 2:
+            self.imageNumber += 1
+        if self.imageNumber == 3:
+            self.imageNumber = 0
+        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+
+class point(pygame.sprite.Sprite):
+    def __init__(self, imagesPoint, posx, posy):
+        pygame.sprite.Sprite.__init__(self)
+        self.resolution = (30, 30)
+        self.images = imagesPoint
+        self.imageNumber = 0
+        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+        self.rect = self.images[self.imageNumber].get_rect()
+        self.rect.left = posx
+        self.rect.top = posy
+
+    '''
+        Este metodo tiene como fin modelar los comportamientos del bloque donde se para hammerbros, en su desplazamiento
+
+        variables:
+            key: Contiene el valor de la tecla o el tipo de evento generado en el juego principal que interviene en los
+        movimientos del bloque donde se para hammerbros.
+    '''
+
+    def update(self):
+        '''
+            Mediante estas decisiones se hace el cambio de imagenes respectivo para el desplazamiento de mario
+
+            variables:
+            '''
+        if self.imageNumber >= 0 and self.imageNumber <= 2:
+            self.imageNumber += 1
+        if self.imageNumber == 3:
+            self.imageNumber = 0
+        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+
+class flower(pygame.sprite.Sprite):
+    def __init__(self, imagesFlower, posx, posy):
+        pygame.sprite.Sprite.__init__(self)
+        self.resolution = (50, 57)
+        self.images = imagesFlower
+        self.imageNumber = 0
+        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+        self.rect = self.images[self.imageNumber].get_rect()
+        self.rect.left = posx
+        self.rect.top = posy
+
+    '''
+        Este metodo tiene como fin modelar los comportamientos del bloque donde se para hammerbros, en su desplazamiento
+
+        variables:
+            key: Contiene el valor de la tecla o el tipo de evento generado en el juego principal que interviene en los
+        movimientos del bloque donde se para hammerbros.
+    '''
+
+    def update(self):
+        '''
+            Mediante estas decisiones se hace el cambio de imagenes respectivo para el desplazamiento de mario
+
+            variables:
+            '''
+        if self.imageNumber >= 0 and self.imageNumber <= 1:
+            self.imageNumber += 1
+        if self.imageNumber == 2:
+            self.imageNumber = 0
+        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
 
 class smallHammer(pygame.sprite.Sprite):
     def __init__(self, image, posX, posY):

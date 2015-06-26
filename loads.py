@@ -9,8 +9,6 @@ class loads:
         pygame.init()
 
         #En esta seccion se cargan las imagenes a utilizar en el juego
-        self.backGround_Image = pygame.image.load('Images/backGround_Image.png')
-        jumping_Mario = pygame.image.load('Images/jumping_Mario.png')
         resting_Mario = pygame.image.load('Images/mario_move1.png')
         walkRight_Mario = pygame.image.load('Images/mario_move2.png')
         walkLeft_Mario = pygame.image.load('Images/mario_move3.png')
@@ -34,6 +32,21 @@ class loads:
         brick4 = pygame.image.load('Images/brick4.png')
         self.brick = [brick1, brick2, brick3, brick4]
         self.floor_stage1 = pygame.image.load('Images/floor_stage1.png')
+        bush1 = pygame.image.load('Images/bush1.png')
+        bush2 = pygame.image.load('Images/bush2.png')
+        bush3 = pygame.image.load('Images/bush3.png')
+        self.imagesBush = [bush1, bush2, bush3]
+        bones1 = pygame.image.load('Images/bones1.png')
+        bones2 = pygame.image.load('Images/bones2.png')
+        bones3 = pygame.image.load('Images/bones3.png')
+        self.imagesBones = [bones1, bones2, bones3]
+        point1 = pygame.image.load('Images/point1.png')
+        point2 = pygame.image.load('Images/point2.png')
+        point3 = pygame.image.load('Images/point3.png')
+        self.imagesPoint = [point1, point2, point3]
+        flower1 = pygame.image.load('Images/flower1.png')
+        flower2 = pygame.image.load('Images/flower2.png')
+        self.imagesFlower = [flower1, flower2]
 
         #En esta seccion se cargan los sonidos a utilizar en el juego
         self.jumping_SoundMario = pygame.mixer.Sound('Music/effectSounds/smb3_jump.wav')
