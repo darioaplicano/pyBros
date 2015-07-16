@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
 #!/usr/bin/env python
 
+#Se importan los archivos necesarios para la correcta ejecución del juego
 import pygame
+import json
 
 class loads:
 
@@ -13,8 +15,11 @@ class loads:
         walkRight_Mario = pygame.image.load('Images/mario_move2.png')
         walkLeft_Mario = pygame.image.load('Images/mario_move3.png')
         walkRight2_Mario = pygame.image.load('Images/mario_move4.png')
-        self.imagesMario = [resting_Mario, walkRight_Mario, walkLeft_Mario, walkRight2_Mario]
+        jump_Mario = pygame.image.load('Images/mario_move5.png')
+        self.imagesMario = [resting_Mario, walkRight_Mario, walkLeft_Mario, walkRight2_Mario, jump_Mario]
         self.pyBros_Logo = pygame.image.load('Images/pyBros_Logo.png')
+        self.backgroundSplas = pygame.image.load('Images/backgroundsplash.png')
+        self.floorSplas = pygame.image.load('Images/floorsplash.png')
         self.main_Screen = pygame.image.load('Images/main_Screen.png')
         self.fungus =  pygame.image.load('Images/fungus.png')
         main_MarioMove1 = pygame.image.load('Images/main_mario_move1.png')
@@ -47,8 +52,13 @@ class loads:
         flower1 = pygame.image.load('Images/flower1.png')
         flower2 = pygame.image.load('Images/flower2.png')
         self.imagesFlower = [flower1, flower2]
+        level1 = pygame.image.load('Images/level1.png')
+        level2 = pygame.image.load('Images/level2.png')
+        self.imagesLevel = [level1, level2]
+        self.castle = pygame.image.load('Images/castle.png')
+        self.bowser_castle = pygame.image.load('Images/bowser_castle.png')
 
-        #En esta seccion se cargan los sonidos a utilizar en el juego
+        #En esta sección se cargan los sonidos a utilizar en el juego
         self.jumping_SoundMario = pygame.mixer.Sound('Music/effectSounds/smb3_jump.wav')
         self.pause = pygame.mixer.Sound('Music/effectSounds/smb3_pause.wav')
         self.travel_Principal = pygame.mixer.Sound('Music/effectSounds/smb3_map_travel.wav')
@@ -56,3 +66,10 @@ class loads:
 
         #En esta sección se cargan las fuentes necesarias
         self.font_Mario = pygame.font.Font("Fonts/Super-Mario-Bros--3.ttf", 25)
+        self.font_Mario2 = pygame.font.Font("Fonts/Super-Mario-Bros--3.ttf", 20)
+
+        #En esta seccion se cargan los archivos json necesarios para la correcta comunicacion del juego
+        self.moves_MainMario()
+
+    def moves_MainMario(self):
+        self.moves_MainMario = json.loads(open("Comunication/moves_MainMario.json").read())

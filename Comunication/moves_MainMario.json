@@ -1,13 +1,1 @@
-[("level1", "no passed",0),
- ("level2", "no passed",0),
- ("level3", "no passed",0),
- ("level4", "no passed",0),
- ("level5", "no passed",0),
- ("level6", "no passed",0),
- ("level7", "no passed",0),
- ("level8", "no passed",0),
- ("level9", "no passed",0),
- ("level10", "no passed",0),
- ("level11", "no passed",0),
- ("level12", "no passed",0),
-]
+[["start", "passed", 0, [276, ""]], ["level1", "no passed", 0, [275, 273]], ["level2", "no passed", 0, [275, 274]], ["level3", "no passed", 0, [276, 274]], ["level4", "no passed", 0, [275, 276]], ["level5", "no passed", 0, [275, 274]], ["level6", "no passed", 0, [276, 274]], ["level7", "no passed", 0, [275, 273]], ["level8", "no passed", 0, [275, 274]], ["level9", "no passed", 0, [276, 274]], ["level10", "no passed", 0, [275, 273]], ["level11", "no passed", 0, [275, 276]], ["level12", "no passed", 0, [276, ""]]]
