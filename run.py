@@ -4,6 +4,7 @@
 #Se importan los archivos necesarios para la correcta ejecución del juego
 import pygame
 import loads
+import Cronometer
 import figures
 import splashScreen
 import levels
@@ -73,6 +74,7 @@ class main:
 
         # Se usa para gestionar cuan rápido se actualiza la pantalla
         self.reloj = pygame.time.Clock()
+        self.clock = Cronometer(120)
 
     '''
         Este método contiene la lógica total del juego, donde se maneja un ciclo infinito hasta la escucha de cualquier
@@ -156,6 +158,7 @@ class main:
                         sys.exit(0)
                 if event.key == pygame.K_BACKSPACE:
                     self.outPause = True
+
 
     '''
         Este método de clase, pinta en el área de trabajo todo lo necesario para la parte vistosa del juego
