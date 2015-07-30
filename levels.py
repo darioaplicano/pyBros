@@ -5,6 +5,7 @@
 import pygame
 import sys
 import figures
+import Cronometer
 
 class level1(pygame.sprite.Sprite):
 
@@ -16,8 +17,8 @@ class level1(pygame.sprite.Sprite):
         self.resolution = resolution
         self.width = self.resolution[0]
         self.height = self.resolution[1]
-        self.floor = figures.floor(self.loads.floor_stage1, 0, 620)
-        self.brick = figures.brick(self.loads.brick, 800, 500)
+        self.floor = figures.floor(self.loads.floor_stage1, 0, 650)
+        self.brick = figures.brick(self.loads.brick, 800, 480)
         self.figureMario = figures.mario(self.loads.imagesMario, 150, 400, self.floor.rect.top)
         self.hammer = figures.enemy(self.loads.imagesHammer, self.loads.smallHammer, 1050, 433)
         #Realiza la activación y desactivación de los movimientos de mario
@@ -27,7 +28,8 @@ class level1(pygame.sprite.Sprite):
         self.pressed = False
 
         # Se usa para gestionar cuan rápido se actualiza la pantalla
-        self.reloj = pygame.time.Clock()
+        #self.reloj = pygame.time.Clock()
+        self.cronometro = Cronometer.Cronometer(120)
         self.run()
 
         #Otras variables
@@ -35,9 +37,13 @@ class level1(pygame.sprite.Sprite):
         self.total = 0
 
     def run(self):
+
+
         pygame.mixer.music.load('Music/backgroundSounds/background_musicPrincipal.mp3')
         pygame.time.set_timer(pygame.USEREVENT, 160)
         while not self.out:
+
+
             # Esta funcion tiene el fin de manejar el comportamiento de los eventos
             self.listenEvent()
 
@@ -49,7 +55,7 @@ class level1(pygame.sprite.Sprite):
 
             # Limita a 20 fotogramas por segundo el pintado de la pantalla
             pygame.display.flip()
-            self.reloj.tick(60)
+            #self.reloj.tick(60)
 
     def listenEvent(self):
         self.key = pygame.key.get_pressed()
@@ -83,6 +89,7 @@ class level1(pygame.sprite.Sprite):
 
         if self.key[pygame.K_SPACE]:
             self.loads.pause.play()
+
             self.pause()
             self.outPause = False
 
@@ -112,11 +119,13 @@ class level1(pygame.sprite.Sprite):
                 if event.key == pygame.K_RETURN:
                     if self.selected == 2 or self.selected == 0:
                         self.outPause = True
+                        self.cronometro.continue_clock()
                     if self.selected == 3:
                         self.outPause = True
                         self.out = True
                 if event.key == pygame.K_BACKSPACE:
                     self.outPause = True
+
 
     def validateCollisions(self):
         if pygame.sprite.collide_mask(self.figureMario, self.floor):
@@ -134,6 +143,7 @@ class level1(pygame.sprite.Sprite):
         Este método de clase, tiene como función pausar el juego  para esperar otros eventos
     '''
     def pause(self):
+        self.cronometro.pause_clock()
         options = [("continue",''),
                     ("active agent",''),
                     ("save and continue",''),
@@ -164,13 +174,15 @@ class level1(pygame.sprite.Sprite):
     def screenPaint(self):
         # Pintado de pantalla
         self.screen.fill((0,0,0))
-        imageBackGround = pygame.transform.scale(self.background,(1280, 620))
+        imageBackGround = pygame.transform.scale(self.background,(1280, 720))
         self.screen.blit(imageBackGround,(0,0))
+        self.screen.blit(self.cronometro.start_clock(),(1190,10))
         self.screen.blit(self.figureMario.image, self.figureMario.rect)
         self.screen.blit(self.hammer.image, self.hammer.position)
         for i in range(8):
-            self.screen.blit(self.brick.image, (self.brick.rect.left + i*40, self.brick.rect.top))
+            self.screen.blit(self.brick.image, (self.brick.rect.left + i*50, self.brick.rect.top))
         self.screen.blit(self.floor.image, self.floor.rect)
+
 
     def update(self):
         self.hammer.update()

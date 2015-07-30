@@ -154,7 +154,7 @@ class level(pygame.sprite.Sprite):
 class brick(pygame.sprite.Sprite):
     def __init__(self, imagesBrick, posx, posy):
         pygame.sprite.Sprite.__init__(self)
-        self.resolution = (40, 50)
+        self.resolution = (50, 50)
         self.images = imagesBrick
         self.imageNumber = 0
         self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
