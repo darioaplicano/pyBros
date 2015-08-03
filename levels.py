@@ -89,7 +89,6 @@ class level1(pygame.sprite.Sprite):
 
         if self.key[pygame.K_SPACE]:
             self.loads.pause.play()
-
             self.pause()
             self.outPause = False
 
@@ -123,9 +122,6 @@ class level1(pygame.sprite.Sprite):
                     if self.selected == 3:
                         self.outPause = True
                         self.out = True
-                if event.key == pygame.K_BACKSPACE:
-                    self.outPause = True
-
 
     def validateCollisions(self):
         if pygame.sprite.collide_mask(self.figureMario, self.floor):

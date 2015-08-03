@@ -58,6 +58,12 @@ class loads:
         self.castle = pygame.image.load('Images/castle.png')
         self.bowser_castle = pygame.image.load('Images/bowser_castle.png')
 
+        #Las imagenes de la historia
+        historia_1 = pygame.image.load('Images/historia_1.png')
+        historia_2 = pygame.image.load('Images/historia_2.png')
+        historia_3 = pygame.image.load('Images/historia_3.png')
+        self.historia = [historia_1,historia_2,historia_3]
+
         #En esta sección se cargan los sonidos a utilizar en el juego
         self.jumping_SoundMario = pygame.mixer.Sound('Music/effectSounds/smb3_jump.wav')
         self.pause = pygame.mixer.Sound('Music/effectSounds/smb3_pause.wav')

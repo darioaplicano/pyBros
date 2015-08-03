@@ -52,6 +52,7 @@ class main:
         self.castle1 = figures.castle(self.loads.castle, 648, 418, (55, 57))
         self.castle2 = figures.castle(self.loads.castle, 758, 418, (55, 57))
         self.castle3 = figures.castle(self.loads.bowser_castle, 921, 368, (108, 110))
+        self.historia = self.loads.historia
 
         #Iniciamos la pantalla de bienvenida
         splashScreen.splashScreen(self.screen, self.loads.backgroundSplas, self.loads.floorSplas, self.width/2, self.height/2)
@@ -70,8 +71,8 @@ class main:
         self.move = True
         self.levelCollision = 0
         self.collision = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        self.history_control = 0
 
-        # Se usa para gestionar cuan rápido se actualiza la pantalla
 
     '''
         Este método contiene la lógica total del juego, donde se maneja un ciclo infinito hasta la escucha de cualquier
@@ -82,6 +83,7 @@ class main:
         pygame.mixer.music.load('Music/backgroundSounds/background_musicPrincipal.mp3')
         pygame.time.set_timer(pygame.USEREVENT, 250)
         while not self.out:
+
             # Esta función tiene el fin de manejar el comportamiento de los eventos
             self.listenEvent()
 
@@ -111,18 +113,23 @@ class main:
             #Si esta decisiṕn llega a retornar verdadero, se cerrará automáticamente la pantalla del juego
             if event.type == pygame.QUIT:
                 self.out = True
+
+
             #Si esta decisión llega a retornar verdadero, se guardará la tecla persionada
-            if self.move == True:
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_SPACE:
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_x:
+                   self.history_control +=1
+                if self.move == True:
+                   if event.key == pygame.K_SPACE:
                         self.pause()
                         self.outPause = False
-                    if event.key == self.loads.moves_MainMario[self.levelCollision][3][0] or event.key == self.loads.moves_MainMario[self.levelCollision][3][1]:
+                   if event.key == self.loads.moves_MainMario[self.levelCollision][3][0] or event.key == self.loads.moves_MainMario[self.levelCollision][3][1]:
                         self.key = event.key
                         self.move = False
                     #Si el evento representa la presión de la tecla return, se verificará si es permitido el acceso al
                     #nivel correspondiente
-                    if event.key == pygame.K_RETURN:
+                   if event.key == pygame.K_RETURN:
+
                         self.levels()
 
     '''
@@ -153,8 +160,8 @@ class main:
                         self.outPause = True
                     if self.selected == 3:
                         sys.exit(0)
-                if event.key == pygame.K_BACKSPACE:
-                    self.outPause = True
+
+
 
 
     '''
@@ -163,55 +170,60 @@ class main:
     def screenPaint(self):
         # Pintado de pantalla
         self.screen.fill((255,255,255))
-        self.screen.blit(self.imageBackGround,(0,0))
-        #Pintamos 7 captus bailarines en la pantalla principal
-        self.screen.blit(self.bush.image, self.bush.rect)
-        self.screen.blit(self.bush.image, (330, 156))
-        self.screen.blit(self.bush.image, (490, 156))
-        self.screen.blit(self.bush.image, (647, 151))
-        self.screen.blit(self.bush.image, (752, 151))
-        self.screen.blit(self.bush.image, (647, 103))
-        self.screen.blit(self.bush.image, (752, 103))
-        #Pintamos 2 calaberas con ojos brillantes
-        self.screen.blit(self.bone.image, self.bone.rect)
-        self.screen.blit(self.bone.image, (974,486))
-        #Pintamos 2 puntos brillantes
-        self.screen.blit(self.point.image, self.point.rect)
-        self.screen.blit(self.point.image, (836, 226))
-        #Pintamos 5 flores come carne
-        self.screen.blit(self.flower.image, self.flower.rect)
-        self.screen.blit(self.flower.image, (440, 360))
-        self.screen.blit(self.flower.image, (320, 360))
-        self.screen.blit(self.flower.image, (440, 303))
-        self.screen.blit(self.flower.image, (440, 417))
-        #Pintamos los bloques de nivel
-        self.screen.blit(self.level1.image, self.level1.rect)
-        self.screen.blit(self.level2.image, self.level2.rect)
-        self.screen.blit(self.level3.image, self.level3.rect)
-        self.screen.blit(self.level4.image, self.level4.rect)
-        self.screen.blit(self.level5.image, self.level5.rect)
-        self.screen.blit(self.level6.image, self.level6.rect)
-        self.screen.blit(self.level7.image, self.level7.rect)
-        self.screen.blit(self.level8.image, self.level8.rect)
-        self.screen.blit(self.level9.image, self.level9.rect)
-        self.screen.blit(self.castle1.image, self.castle1.rect)
-        self.screen.blit(self.castle2.image, self.castle2.rect)
-        self.screen.blit(self.castle3.image, self.castle3.rect)
-        #Pintamos a mario desplazandose por los caminos en la pantalla principal
-        self.screen.blit(self.main_mario.image, self.main_mario.rect)
-        #Se pinta un poligono donde internamente se pintara una M, representando que se juega con mario y otros textos
-        posX = 560
-        posY = 646
-        pygame.draw.polygon(self.screen, (0,0,0), [[posX, posY],           [posX + 5, posY],       [posX + 5, posY - 5],
-                                                   [posX + 45, posY - 5],  [posX + 45, posY],      [posX + 50, posY],
-                                                   [posX + 50, posY + 15], [posX + 45, posY + 15], [posX + 45, posY + 20],
-                                                   [posX + 5,  posY + 20], [posX + 5,  posY + 15], [posX, posY + 15]], 5)
-        text = self.loads.font_Mario.render("m", 2, (255, 255, 255, 255))
-        self.screen.blit(text, (577, 638))
-        text = self.loads.font_Mario2.render("x", 2, (0, 0, 0, 255))
-        self.screen.blit(text, (616, 641))
-        text = self.loads.font_Mario2.render("world", 2, (255, 255, 255, 255))
-        self.screen.blit(text, (558, 616))
+
+        if self.history_control < 3:
+            self.screen.blit(self.historia[self.history_control],(0,0))
+            self.saltar_historia()
+        else :
+            self.screen.blit(self.imageBackGround,(0,0))
+            #Pintamos 7 captus bailarines en la pantalla principal
+            self.screen.blit(self.bush.image, self.bush.rect)
+            self.screen.blit(self.bush.image, (330, 156))
+            self.screen.blit(self.bush.image, (490, 156))
+            self.screen.blit(self.bush.image, (647, 151))
+            self.screen.blit(self.bush.image, (752, 151))
+            self.screen.blit(self.bush.image, (647, 103))
+            self.screen.blit(self.bush.image, (752, 103))
+            #Pintamos 2 calaberas con ojos brillantes
+            self.screen.blit(self.bone.image, self.bone.rect)
+            self.screen.blit(self.bone.image, (974,486))
+            #Pintamos 2 puntos brillantes
+            self.screen.blit(self.point.image, self.point.rect)
+            self.screen.blit(self.point.image, (836, 226))
+            #Pintamos 5 flores come carne
+            self.screen.blit(self.flower.image, self.flower.rect)
+            self.screen.blit(self.flower.image, (440, 360))
+            self.screen.blit(self.flower.image, (320, 360))
+            self.screen.blit(self.flower.image, (440, 303))
+            self.screen.blit(self.flower.image, (440, 417))
+            #Pintamos los bloques de nivel
+            self.screen.blit(self.level1.image, self.level1.rect)
+            self.screen.blit(self.level2.image, self.level2.rect)
+            self.screen.blit(self.level3.image, self.level3.rect)
+            self.screen.blit(self.level4.image, self.level4.rect)
+            self.screen.blit(self.level5.image, self.level5.rect)
+            self.screen.blit(self.level6.image, self.level6.rect)
+            self.screen.blit(self.level7.image, self.level7.rect)
+            self.screen.blit(self.level8.image, self.level8.rect)
+            self.screen.blit(self.level9.image, self.level9.rect)
+            self.screen.blit(self.castle1.image, self.castle1.rect)
+            self.screen.blit(self.castle2.image, self.castle2.rect)
+            self.screen.blit(self.castle3.image, self.castle3.rect)
+            #Pintamos a mario desplazandose por los caminos en la pantalla principal
+            self.screen.blit(self.main_mario.image, self.main_mario.rect)
+            #Se pinta un poligono donde internamente se pintara una M, representando que se juega con mario y otros textos
+            posX = 560
+            posY = 646
+            pygame.draw.polygon(self.screen, (0,0,0), [[posX, posY],           [posX + 5, posY],       [posX + 5, posY - 5],
+                                                       [posX + 45, posY - 5],  [posX + 45, posY],      [posX + 50, posY],
+                                                       [posX + 50, posY + 15], [posX + 45, posY + 15], [posX + 45, posY + 20],
+                                                       [posX + 5,  posY + 20], [posX + 5,  posY + 15], [posX, posY + 15]], 5)
+            text = self.loads.font_Mario.render("m", 2, (255, 255, 255, 255))
+            self.screen.blit(text, (577, 638))
+            text = self.loads.font_Mario2.render("x", 2, (0, 0, 0, 255))
+            self.screen.blit(text, (616, 641))
+            text = self.loads.font_Mario2.render("world", 2, (255, 255, 255, 255))
+            self.screen.blit(text, (558, 616))
 
     '''
         Este método de clase, actualiza los personajes para sus movimientos
@@ -303,6 +315,11 @@ class main:
                 counter += 1
             pygame.display.flip()
         self.loads.pause.play()
+
+    def saltar_historia(self):
+        texto = self.loads.font_Mario2.render("saltar x",1,(255,255,255))
+        self.screen.blit(texto,(900,550))
+
 
 #Se crea una instancia al juego para comenzar el mismo
 iniciar = main()
