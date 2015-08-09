@@ -18,9 +18,9 @@ class level1(pygame.sprite.Sprite):
         self.width = self.resolution[0]
         self.height = self.resolution[1]
         self.floor = figures.floor(self.loads.floor_stage1, 0, 650)
-        self.brick = figures.brick(self.loads.brick, 800, 480)
-        self.figureMario = figures.mario(self.loads.imagesMario, 150, 400, self.floor.rect.top)
-        self.hammer = figures.enemy(self.loads.imagesHammer, self.loads.smallHammer, 1050, 433)
+        self.brick = figures.brick(self.loads.brick, 800, 470)
+        self.figureMario = figures.mario(self.loads.imagesMario, 150, 563, self.floor.rect.top)
+        self.hammer = figures.enemy(self.loads.imagesHammer, self.loads.smallHammer, 1050, 402, self.brick)
         #Realiza la activación y desactivación de los movimientos de mario
         self.key = pygame.KEYUP
         self.out = False
@@ -40,7 +40,7 @@ class level1(pygame.sprite.Sprite):
 
 
         pygame.mixer.music.load('Music/backgroundSounds/background_musicPrincipal.mp3')
-        pygame.time.set_timer(pygame.USEREVENT, 160)
+        pygame.time.set_timer(pygame.USEREVENT, 200)
         while not self.out:
 
 
@@ -62,7 +62,8 @@ class level1(pygame.sprite.Sprite):
 
         for event in pygame.event.get():
             if event.type == pygame.USEREVENT:
-                self.update()
+               # self.update()
+                pass
 
             if event.type == pygame.QUIT:
                 sys.exit(0)
@@ -177,9 +178,21 @@ class level1(pygame.sprite.Sprite):
         self.screen.blit(self.hammer.image, self.hammer.position)
         for i in range(8):
             self.screen.blit(self.brick.image, (self.brick.rect.left + i*50, self.brick.rect.top))
+            self.rectBrick = pygame.Rect((self.brick.rect.left + i * 50, self.brick.rect.top), (self.brick.resolution))
+            # La superficie de los bricks se agregan a una lista
+            self.brick.listRect.append(self.rectBrick)
         self.screen.blit(self.floor.image, self.floor.rect)
+        if (self.hammer.flag and self.hammer.throw):
+            self.hammer.saveSmallHammer(self.hammer.position[0], self.hammer.position[1])
+        self.update()
 
 
     def update(self):
         self.hammer.update()
         self.brick.update()
+        if len(self.hammer.listSmallHammers) > 0:
+            for hammercito in self.hammer.listSmallHammers:
+                hammercito.drawHammer(self.screen)
+                if pygame.sprite.collide_mask(self.figureMario,hammercito):
+                    print "Game Over"
+                    sys.exit(0)
