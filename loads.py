@@ -58,6 +58,13 @@ class loads:
         self.castle = pygame.image.load('Images/castle.png')
         self.bowser_castle = pygame.image.load('Images/bowser_castle.png')
 
+        #Imagenes pertenecientes a Mario sin transformacion
+        small_Mario1 = pygame.image.load("Images/small_mario1.png")
+        small_Mario2 = pygame.image.load("Images/small_mario2.png")
+        small_Mario3 = pygame.image.load("Images/small_mario3.png")
+        small_Mario4 = pygame.image.load("Images/small_mario4.png")
+        self.small_Mario = [small_Mario1,small_Mario2,small_Mario3,small_Mario4]
+
         #Las imagenes de la historia
         historia_1 = pygame.image.load('Images/historia_1.png')
         historia_2 = pygame.image.load('Images/historia_2.png')

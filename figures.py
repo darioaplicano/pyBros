@@ -12,7 +12,7 @@ import random
 class mario(pygame.sprite.Sprite):
     def __init__(self, imagesMario, posx, posy, soilLevel):
         pygame.sprite.Sprite.__init__(self)
-        self.resolution = (75, 87)
+        self.resolution = (60, 90)
         self.images = imagesMario
         self.soilLevel = soilLevel
         self.imageNumber = 0
@@ -49,7 +49,8 @@ class mario(pygame.sprite.Sprite):
         self.rect.move_ip(0, -move)
 
     def everDown(self):
-        self.rect.move_ip(0, 1)
+        if self.rect.top>548:
+          self.rect.move_ip(0, 1)
 
     def run(self, key):
         if (key == pygame.K_LEFT):
@@ -61,7 +62,7 @@ class mario(pygame.sprite.Sprite):
 
     def stopped(self):
         self.imageNumber = 0
-        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+        self.image = pygame.transform.scale(self.images[self.imageNumber],self.resolution)
 
     def jump(self):
         # solo evalúa un salto si está en el suelo.
@@ -73,8 +74,8 @@ class mario(pygame.sprite.Sprite):
 
     def updateJump(self):
         # si está saltando actualiza su posición
-        self.rect.y += self.initial
-        self.initial += 3
+            self.rect.y += self.initial
+            self.initial += 3
 
 '''
     Esta clase representa el mario que se desplaza a traves de los niveles para seleccionar cual jugar
@@ -389,8 +390,10 @@ class enemy(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.listImages[0], self.size)
         self.image = pygame.transform.flip(self.image, True, False)
         self.rectHammer = self.image.get_rect()
+        self.rectHammer.left = posX
         self.posX = posX
         self.posY = posY
+        self.rectHammer.top = posY
         # Posicion de imagen en la pantalla
         self.position = [posX, posY]
         self.listSmallHammers = []  # Lista de hammers
@@ -399,7 +402,6 @@ class enemy(pygame.sprite.Sprite):
         self.flag = False
         #cntador para cada tiempo que tiene que saltar el hammer
         self.counter=0
-        self.timer = 0 # Tiempo para tirar el martillo
         self.down = True
         self.timer = 0 #Tiempo para tirar el martillo
         self.throw = False
@@ -444,7 +446,8 @@ class enemy(pygame.sprite.Sprite):
         if self.timer == 10: #comprueba el contador
             self.throw = True
             self.timer = 0 #Asigna de nuevo cero al timer
-        else:   self.timer += 1 # se incrementa si es falso
+        else:
+            self.timer += 1 # se incrementa si es falso
         # Para controlar el rango de la lista de imagenes
         if self.firstImage > self.lastImage:
             self.firstImage = 0 # Se asigna cero para que recorra de nuevo la lista
@@ -455,6 +458,6 @@ class enemy(pygame.sprite.Sprite):
         self.rectHammer =self.image.get_rect()
         self.rectHammer.left = self.posX
         self.rectHammer.top = self.posY
-        self.position = [self.posX, self.posY]
+        #self.position = [self.posX, self.posY]
         self.firstImage += 1 #Incremento para la siguiente imagen
         self.counter += 1 # Incremento en el contador para el salto
