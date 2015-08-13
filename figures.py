@@ -12,7 +12,7 @@ import random
 class mario(pygame.sprite.Sprite):
     def __init__(self, imagesMario, posx, posy, soilLevel):
         pygame.sprite.Sprite.__init__(self)
-        self.resolution = (60, 90)
+        self.resolution = (50, 90)
         self.images = imagesMario
         self.soilLevel = soilLevel
         self.imageNumber = 0
@@ -162,7 +162,6 @@ class brick(pygame.sprite.Sprite):
         self.rect = self.images[self.imageNumber].get_rect()
         self.rect.left = posx
         self.rect.top = posy
-        self.listRect = []
 
     '''
         Este metodo tiene como fin modelar los comportamientos del bloque donde se para hammerbros, en su desplazamiento
@@ -333,7 +332,7 @@ class smallHammer(pygame.sprite.Sprite):
         self.randomt = random.uniform(0.4, 2)
         # Cargamos la imagen del martillo
         self.image = imageH
-        self.size=(30,40)
+        self.size=(35,45)
         self.image = pygame.transform.scale(self.image, self.size)
         # Dibuja una superficie segun el tamanio de la imagen
         self.rect = self.image.get_rect()
@@ -367,16 +366,16 @@ class smallHammer(pygame.sprite.Sprite):
 
 class enemy(pygame.sprite.Sprite):
      # Inicializa la clase
-    def __init__(self, images, smallhammer, posX, posY, brick):
+    def __init__(self, images, smallhammer, posX, posY, listBricks):
         # Intancializar la clase sprite
         pygame.sprite.Sprite.__init__(self)
         # Obtener lista de todas las imagenes del sprite
         self.listImages = images
         # Tamaño del enemigo y el martillo
-        self.size = (60,70)
+        self.size = (70,80)
         # Imagen del martillo
         self.imageSH = smallhammer
-        self.listB = brick.listRect
+        self.listB = self.rectBricks(listBricks)
         # Variable para la primera posicion que esta la imagen
         self.firstImage = 0
         # El tamanio del objeto en x
@@ -407,6 +406,13 @@ class enemy(pygame.sprite.Sprite):
         self.throw = False
         self.lvl = 1
 
+    def rectBricks(self, listBricks):
+        listRect = []
+        for brick in listBricks:
+            self.rectBrick = pygame.Rect((brick.rect.left, brick.rect.top),(brick.resolution))
+            # La superficie de los bricks se agregan a una lista
+            listRect.append(self.rectBrick)
+        return listRect
 
     # Esta funcion fue creada para guardar todos los martillos
     # Recibiendo paramatros de la posicion actual del martillo
@@ -458,6 +464,6 @@ class enemy(pygame.sprite.Sprite):
         self.rectHammer =self.image.get_rect()
         self.rectHammer.left = self.posX
         self.rectHammer.top = self.posY
-        #self.position = [self.posX, self.posY]
+        self.position = [self.posX, self.posY]
         self.firstImage += 1 #Incremento para la siguiente imagen
         self.counter += 1 # Incremento en el contador para el salto

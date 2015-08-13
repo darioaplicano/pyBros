@@ -16,6 +16,8 @@ class loads:
         walkLeft_Mario = pygame.image.load('Images/mario_move3.png')
         walkRight2_Mario = pygame.image.load('Images/mario_move4.png')
         jump_Mario = pygame.image.load('Images/mario_move5.png')
+        image_Mario6 = pygame.image.load("Images/mario_move6.png")
+        image_Mario7 = pygame.image.load("Images/mario_move7.png")
         self.imagesMario = [resting_Mario, walkRight_Mario, walkLeft_Mario, walkRight2_Mario, jump_Mario]
         self.pyBros_Logo = pygame.image.load('Images/pyBros_Logo.png')
         self.backgroundSplas = pygame.image.load('Images/backgroundsplash.png')
