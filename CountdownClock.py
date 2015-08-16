@@ -10,7 +10,7 @@ class CountdownClock :
 
     def __init__(self,time):
         self.remaining_t = time     # Inicializa la cuenta regresiva
-        pygame.time.set_timer(pygame.USEREVENT + 1 ,1000)
+        #pygame.time.set_timer(pygame.USEREVENT + 1 ,1000)
         self.lock_time = False  # Almacena el estado de la pausa, True: pausa activada
         pygame.font.init()
         self.fuente  = pygame.font.Font("Fonts/Super-Mario-Bros--3.ttf",30)
@@ -19,7 +19,7 @@ class CountdownClock :
     def get_remaining_time(self):
         return self.remaining_t
 
-    def start_clock(self):
+    def start_clock(self,event):
         """
         Metodo utilizado para reducir segundo a segundo con cada llamada el tiempo restantante.
         Genera un objeto de tipo superfice en la que se imprime la cuenta, los parametros del
@@ -27,14 +27,13 @@ class CountdownClock :
         :return: surface.
         """
         if self.lock_time == False :
-            for event in pygame.event.get():
-                if event.type == pygame.USEREVENT + 1:
-                    self.remaining_t -=1
 
+            if event.type == pygame.USEREVENT + 1:
+                self.remaining_t -=1
 
-
-        self.texto = self.fuente.render(str(self.get_remaining_time()),1,(255,255,255))
-        return self.texto
+        return None
+    def return_time(self):
+        return  self.fuente.render(str(self.get_remaining_time()),1,(255,255,255))
 
     def pause_clock(self):
         """
@@ -55,5 +54,5 @@ class CountdownClock :
         :return: None
         """
         self.lock_time = False
-        self.start_clock()
+
         return None

@@ -11,6 +11,7 @@ class loads:
         pygame.init()
 
         #En esta seccion se cargan las imagenes a utilizar en el juego
+        self.tablero = pygame.image.load("Images/tablero.png")
         resting_Mario = pygame.image.load('Images/mario_move1.png')
         walkRight_Mario = pygame.image.load('Images/mario_move2.png')
         walkLeft_Mario = pygame.image.load('Images/mario_move3.png')
@@ -18,7 +19,7 @@ class loads:
         jump_Mario = pygame.image.load('Images/mario_move5.png')
         image_Mario6 = pygame.image.load("Images/mario_move6.png")
         image_Mario7 = pygame.image.load("Images/mario_move7.png")
-        self.imagesMario = [resting_Mario, walkRight_Mario, walkLeft_Mario, walkRight2_Mario, jump_Mario]
+        self.imagesMario = [resting_Mario, walkRight_Mario, walkLeft_Mario, walkRight2_Mario, jump_Mario,image_Mario6,image_Mario7]
         self.pyBros_Logo = pygame.image.load('Images/pyBros_Logo.png')
         self.backgroundSplas = pygame.image.load('Images/backgroundsplash.png')
         self.floorSplas = pygame.image.load('Images/floorsplash.png')

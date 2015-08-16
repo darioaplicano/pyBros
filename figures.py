@@ -21,56 +21,121 @@ class mario(pygame.sprite.Sprite):
         self.rect.left = posx
         self.rect.top = posy
         self.invert = False
-        self.initial = 0
+        self.press_time = 0
+        self.image_cont = 0
+        self.rect_temp = 0
+        self.vector = [False,True,False]
+        self.contador = 0
 
-    '''
-        Este metodo tiene como fin modelar los comportamientos de mario, en su desplazamiento
 
-        variables:
-            key: Contiene el valor de la tecla o el tipo de evento generado que interviene en los
-                movimientos de mario.
-    '''
-    def update(self):
-        '''
-        Mediante estas decisiones se hace el cambio de imagenes respectivo para el desplazamiento de mario
 
-        variables:
-        '''
-        if self.imageNumber >= 0 and self.imageNumber <= 3:
-            self.imageNumber += 1
-        if self.imageNumber == 4:
-            self.imageNumber = 0
+    #def update(self):
+    #    '''
+    #    Mediante estas decisiones se hace el cambio de imagenes respectivo para el desplazamiento de mario
+    #
+    #    variables:
+    #    '''
+    #    if vector[1]:
+    #        if self.imageNumber >= 0 and self.imageNumber <= 3:
+    #            self.imageNumber += 1
+    #        if self.imageNumber == 4:
+    #            self.imageNumber = 0
+    #
+    #    self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+    #    if self.invert:
+    #        self.image = pygame.transform.flip(self.image, self.invert, False)
+    #    if self.imageNumber == 6 :
+    #        self.imageNumber = 1
+    #        self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
 
+    def changeImage(self):
         self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
         if self.invert:
             self.image = pygame.transform.flip(self.image, self.invert, False)
 
-    def moveUp(self, move = 1):
-        self.rect.move_ip(0, -move)
+    def update(self):
+           if self.vector == [True,False,False]:
+               self.imageNumber = 2
+               self.changeImage()
+               self.vector = [False,False, False]
+           elif self.vector[1] :
+               self.imageNumber = 0
+               self.changeImage()
+               self.vector =  [False,False, False]
+           elif self.vector == [False,True,True]:
+               self.rect = self.rect_temp
+               self.rect.size = self.resolution
+               self.imageNumber = 0
+               self.changeImage()
 
-    def everDown(self):
-        if self.rect.top>548:
-          self.rect.move_ip(0, 1)
+
+
+
+
+
+
+
+
+
+
+    def everDown(self,down):
+        if down :
+             self.rect.move_ip(0, 4)
+             self.vector = [True,False,False]
+
+        else :
+            self.rect.move_ip(0,0)
+            self.vector[1] = [False,True,False]
 
     def run(self, key):
         if (key == pygame.K_LEFT):
-            self.rect.move_ip(-20, 0)
+            self.rect.move_ip(-5, 0)
+
             self.invert = True
         if (key == pygame.K_RIGHT):
-            self.rect.move_ip(20, 0)
+            self.rect.move_ip(5, 0)
             self.invert = False
+
+    def crouch(self, jumping,falling):
+        resolution = (40,49)
+        self.imageNumber = 6
+
+        if not jumping and not falling:
+            self.image = pygame.transform.scale(self.images[self.imageNumber],resolution)
+            self.rect_temp = self.rect
+            self.rect.size = resolution
+            self.rect.top = self.rect_temp.top + 40
+            if self.invert:
+                self.image = pygame.transform.flip(self.image, self.invert, False)
+            self.vector = [False,True,True]
+        if falling :
+            self.image = pygame.transform.scale(self.images[self.imageNumber],resolution)
+            if self.invert:
+                self.image = pygame.transform.flip(self.image, self.invert, False)
+            self.vector = [True,False,True]
+
 
     def stopped(self):
         self.imageNumber = 0
         self.image = pygame.transform.scale(self.images[self.imageNumber],self.resolution)
 
-    def jump(self):
-        # solo evalúa un salto si está en el suelo.
-        self.initial = -30
+    def jump(self,press):
+        jump = 4
+        move = 2
         self.imageNumber = 4
         self.image = pygame.transform.scale(self.images[self.imageNumber], self.resolution)
+
+        self.press_time +=1
+
+        if press:
+            if self.press_time <=10:
+                self.rect.move_ip(move,-move*move*self.press_time)
+        else:
+            if self.press_time <=10:
+                self.rect.move_ip(0,-jump*self.press_time)
         if self.invert:
             self.image = pygame.transform.flip(self.image, self.invert, False)
+
 
     def updateJump(self):
         # si está saltando actualiza su posición
@@ -186,8 +251,17 @@ class brick(pygame.sprite.Sprite):
 class floor(pygame.sprite.Sprite):
     def __init__(self, imageFloor, posx, posy):
         pygame.sprite.Sprite.__init__(self)
-        self.resolution = (1280, 100)
+        self.resolution = (1280, 70)
         self.image = pygame.transform.scale(imageFloor, self.resolution)
+        self.rect = self.image.get_rect()
+        self.rect.left = posx
+        self.rect.top = posy
+
+class panel(pygame.sprite.Sprite):
+    def __init__(self, imagePanel, posx, posy):
+        pygame.sprite.Sprite.__init__(self)
+        self.resolution = (1280, 80)
+        self.image = pygame.transform.scale(imagePanel, self.resolution)
         self.rect = self.image.get_rect()
         self.rect.left = posx
         self.rect.top = posy
