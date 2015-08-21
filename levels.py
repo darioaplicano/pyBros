@@ -219,6 +219,9 @@ class level1(pygame.sprite.Sprite):
                 hammercito.drawHammer(self.screen)
                 if pygame.sprite.collide_mask(self.figureMario,hammercito):
                     self.gameOver()
+                if pygame.sprite.collide_mask(self.floor, hammercito):
+                    ubication = self.hammer.listSmallHammers.index(hammercito)
+                    del self.hammer.listSmallHammers[ubication]
 
     #Verifica si hay colision mario con los bricks y los elimina, tambien verifica si arriba esta hammer 
     def updateCollide(self):
